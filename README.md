@@ -57,6 +57,30 @@ Para completar este desafío con éxito, tu aplicación **DEBE** cumplir con los
 
 ---
 
+## 📂 Estructura del Repositorio
+
+Cada participante debe crear **una carpeta con su nombre o nick** dentro del directorio principal, y allí agregar todo su proyecto (archivos HTML, CSS, JS, Python, base de datos, etc.).
+
+Ejemplo de estructura:
+
+```
+Reto-Reloj-Control/
+├── Participante1/
+│   ├── app.py
+│   ├── templates/
+│   └── images/
+├── Participante2/
+│   ├── app.py
+│   ├── base-de-datos/
+│   └── images/
+├── README.md
+└── LICENSE
+```
+
+👉 De esta forma, todos los aportes quedarán ordenados y será más fácil revisar cada propuesta.  
+
+---
+
 ## 📊 Propuesta de Esquema de Base de Datos
 
 Para guiarte, aquí tienes una propuesta de cómo podrían ser tus tablas:
