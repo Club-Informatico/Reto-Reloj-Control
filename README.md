@@ -150,3 +150,49 @@ Para guiarte, aquí tienes una propuesta de cómo podrían ser tus tablas:
 ---
 
 ¡Este desafío es un paso gigante hacia el mundo de la ciberseguridad aplicada! Disfruten el proceso de construir algo que no solo funciona, sino que es robusto y seguro. ¡A programar se ha dicho! 💻🔐
+
+---
+
+## 🏆 Ranking
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <a href="#">
+        <img src="#" width="140" />
+      </a>
+    </td>
+     <td align="center">
+      <a href="#">
+        <img src="#" width="140" />
+      </a>
+    </td>
+     <td align="center">
+      <a href="#">
+        <img src="#" width="140" />
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">? ? ? <img src="https://rawcdn.githack.com/twitter/twemoji/v14.0.2/assets/svg/1f1e8-1f1f1.svg" width="16" /></td>
+    <td align="center">? ? ? <img src="https://rawcdn.githack.com/twitter/twemoji/v14.0.2/assets/svg/1f1e8-1f1f1.svg" width="16" /></td>
+    <td align="center">? ? ? <img src="https://rawcdn.githack.com/twitter/twemoji/v14.0.2/assets/svg/1f1e8-1f1f1.svg" width="16" /></td>
+  </tr>
+  <tr>
+     <td align="center">
+     <img src="https://twemoji.maxcdn.com/v/latest/svg/1f947.svg" width="64" alt="Medalla de oro" />
+     </td>
+     <td align="center">
+     <img src="https://twemoji.maxcdn.com/v/latest/svg/1f948.svg" width="64" alt="Medalla de oro" />
+     </td>
+     <td align="center">
+     <img src="https://twemoji.maxcdn.com/v/latest/svg/1f949.svg" width="64" alt="Medalla de oro" />
+     </td>
+  </tr>
+</table>
+
+## Colaboradores
+
+<a href="https://github.com/Club-Informatico/Reto-Reloj-Control/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Club-Informatico/Reto-Reloj-Control" />
+</a>
