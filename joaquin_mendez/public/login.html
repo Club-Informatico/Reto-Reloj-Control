@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reloj Asistencia</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js" integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-slate-900 flex flex-col items-center justify-center h-screen">
+  <h1 class="text-3xl font-bold mb-8 text-white">
+    LOGIN
+  </h1>
+  <div class="rounded-2xl">
+        <form class="space-y-3">
+            <div>
+                <label class="text-slate-300">Rut</label>
+                <input id="rut_login" name="rut_login" type="text" placeholder="12.345.678-9"
+                    class="w-full block min-w-0 grow bg-gray-800 py-1.5 pr-4 pl-7 text-base text-white focus:outline-none border border-neutral-800 rounded-lg"
+                    required>
+            </div>
+            <div>
+                <button
+                    class="text-white rounded-lg bg-emerald-600 px-4 py-2 w-full font-semibold hover:bg-emerald-700">Ingresar</button>
+            </div>
+        </form>
+    </div>
+</body>
+<footer class="text-white text-center mt-10 py-3">
+  <p id="foot"></p>
+</footer>
+<script>
+  const anio = new Date().getFullYear()
+  document.getElementById('foot').innerText = `${anio} - Sistema de Registro`
+</script>
+
+</html>

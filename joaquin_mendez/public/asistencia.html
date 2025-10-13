@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reloj Asistencia</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js" integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-slate-900 flex flex-col items-center justify-center h-screen">
+  <div class="text-white" hx-get="/hora" hx-trigger="every 1s" hx-target="this" hx-swap="innerHTML"></div>
+  <div>
+    <h1 class="text-3xl font-bold mb-8 text-white">
+      Control Asistencia
+    </h1>
+    <div class="space-x-20">
+      <button class="text-white rounded bg-emerald-700 hover:bg-emerald-800 px-5 py-4">Ingreso</button>
+      <button class="text-white rounded bg-red-700 hover:bg-red-800 px-5 py-4">Salida</button>
+    </div>
+  </div>
+</body>
+<footer class="text-white text-center mt-10 py-3">
+  <p id="foot"></p>
+</footer>
+<script>
+  const anio = new Date().getFullYear()
+  document.getElementById('foot').innerText = `${anio} - Sistema de Registro`
+</script>
+
+</html>
