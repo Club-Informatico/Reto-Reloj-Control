@@ -5,7 +5,8 @@ const sequelize = new Sequelize({
     host: "localhost",
     password: Deno.env.get("DB_PASS"),
     database: Deno.env.get("DB_NAME"),
-    username: Deno.env.get("DB_USER")
+    username: Deno.env.get("DB_USER"),
+    logging: false
 });
 
 (async () => {

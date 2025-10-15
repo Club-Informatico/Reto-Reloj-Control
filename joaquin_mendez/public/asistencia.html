@@ -10,7 +10,7 @@
 </head>
 
 <body class="bg-slate-900 flex flex-col items-center justify-center h-screen">
-  <div class="text-white" hx-get="/hora" hx-trigger="every 1s" hx-target="this" hx-swap="innerHTML"></div>
+  <div class="text-white" hx-get="/api/v1/hora" hx-trigger="every 1s" hx-target="this" hx-swap="innerHTML"></div>
   <div>
     <h1 class="text-3xl font-bold mb-8 text-white">
       Control Asistencia
@@ -25,8 +25,7 @@
   <p id="foot"></p>
 </footer>
 <script>
-  const anio = new Date().getFullYear()
-  document.getElementById('foot').innerText = `${anio} - Sistema de Registro`
+  document.getElementById('foot').innerText = `Sistema de Registro`
 </script>
 
 </html>
