@@ -1,31 +1,65 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reloj Asistencia</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"
+      integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      //let session = localStorage.getItem("valRut")
+      //if(session!==null){
+        //window.location.href = "login.html"
+      //}
+    </script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reloj Asistencia</title>
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js" integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ" crossorigin="anonymous"></script>
-</head>
-
-<body class="bg-slate-900 flex flex-col items-center justify-center h-screen">
-  <div class="text-white" hx-get="/api/v1/hora" hx-trigger="every 1s" hx-target="this" hx-swap="innerHTML"></div>
-  <div>
-    <h1 class="text-3xl font-bold mb-8 text-white">
-      Control Asistencia
-    </h1>
-    <div class="space-x-20">
-      <button class="text-white rounded bg-emerald-700 hover:bg-emerald-800 px-5 py-4">Ingreso</button>
-      <button class="text-white rounded bg-red-700 hover:bg-red-800 px-5 py-4">Salida</button>
+  <header class="absolute top-0 right-0 p-4">
+    <div class="flex flex-col items-end gap-2">
+      <div
+      class="text-white font-medium"
+      hx-get="/api/v1/hora"
+      hx-trigger="every 1s"
+      hx-target="this"
+      hx-swap="innerHTML"
+    ></div>
+      <button class="px-4 py-2 rounded bg-yellow-300 hover:bg-yellow-400 text-gray-800 font-medium transition-colors">Salir</button>
     </div>
-  </div>
-</body>
-<footer class="text-white text-center mt-10 py-3">
-  <p id="foot"></p>
-</footer>
-<script>
-  document.getElementById('foot').innerText = `Sistema de Registro`
-</script>
+  </header>
 
+  </header>
+  <body class="bg-slate-900 flex flex-col items-center justify-center h-screen">
+    <div>
+      <h1 class="text-3xl font-bold mb-8 text-white">
+        Control Asistencia
+      </h1>
+      <div class="space-x-20">
+        <button
+          type="button"
+          class="text-white rounded bg-emerald-700 hover:bg-emerald-800 px-5 py-4"
+          hx-post="/api/v1/ingreso"
+          hx-include="[name='rut_h']"
+        >
+          Ingreso
+        </button>
+        <button
+          type="button"
+          class="text-white rounded bg-red-700 hover:bg-red-800 px-5 py-4"
+          hx-post="/api/v1/salida"
+          hx-include="[name='rut_h']"
+        >
+          Salida
+        </button>
+        <input type="hidden" id="rut_h" name="rut_h">
+      </div>
+    </div>
+  </body>
+  <footer class="text-white text-center mt-10 py-3 justify-center">
+    <p id="foot">Sistema de Registro</p>
+  </footer>
+  <script src="app.js"></script>
 </html>
