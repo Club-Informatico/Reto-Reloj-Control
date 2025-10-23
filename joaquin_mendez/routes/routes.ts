@@ -4,8 +4,8 @@ import { RegistroAsistencia, Usuario } from "../models/usuario.ts";
 import * as speakeasy from "speakeasy";
 import { encodeQR } from "@paulmillr/qr";
 import sequelize from "../database/db.ts";
+import { QueryTypes } from "sequelize";
 
-//import { UserDTO } from "../models/usuarioDTO.ts"
 
 const router = new Router();
 router.prefix("/api/v1");
@@ -19,15 +19,36 @@ router.get("/hora", (ctx: Context) => {
 router.post("/test", async (ctx: Context) => {
 
   try {
-    //ctx.request.headers.set("content-type", "text/plain")
+
+    type Help = {
+      id: number,
+      case: string
+    };
+
     const rut = (await ctx.request.body.form()).get("rut_h");
-    //ctx.request.headers.set("Content-Type", "text/plain")
-    //const body = ctx.request.body
-    //const rut = await body.formData()
 
+    const u = await Usuario.findOne({
+      where: {
+        rut: rut
+      }
+    })
 
+    const res = await sequelize.query(`
+      SELECT id,
+	      CASE
+		      WHEN "hora_salida" IS NULL THEN 'I'
+		      WHEN "hora_salida" IS NOT NULL THEN 'S'
+	      END
+      FROM registros_asistencia
+      WHERE "usuarioId" = `+ u?.get("id") + `
+      AND "createdAt" = (select MAX("createdAt") from registros_asistencia WHERE "usuarioId" = `+ u?.get("id") + `);`, {
+      type: QueryTypes.SELECT
+    })
 
-    console.log(rut)
+    //const help: Help | undefined = (res as Help[])[0]
+    const help: Help = res[0] as Help
+
+    console.log(help.case)
     ctx.response.body = rut
   } catch (error) {
     console.log("error=" + error)
@@ -56,6 +77,12 @@ router.post("/registro", async (ctx: Context) => {
 
 router.post("/login", async (ctx: Context) => {
   try {
+
+    type Help = {
+      id: number,
+      case: string
+    };
+
     const body = ctx.request.body;
 
     const secret = speakeasy.generateSecret({
@@ -76,6 +103,22 @@ router.post("/login", async (ctx: Context) => {
       return;
     }
 
+    //[x]TODO raw query
+    //TODO setea respuesta de bd y guarda en localstorage
+    const res = await sequelize.query(`
+      SELECT id,
+	      CASE
+		      WHEN "hora_salida" IS NULL THEN 'I'
+		      WHEN "hora_salida" IS NOT NULL THEN 'S'
+	      END
+      FROM registros_asistencia
+      WHERE "usuarioId" = `+ user?.get("id") + `
+      AND "createdAt" = (select MAX("createdAt") from registros_asistencia WHERE "usuarioId" = `+ user?.get("id") + `);`, {
+      type: QueryTypes.SELECT
+    })
+
+    const help: Help = res[0] as Help
+
     const totp = user.get("totp_secret");
     if (totp === null) {
       await Usuario.update({
@@ -85,12 +128,14 @@ router.post("/login", async (ctx: Context) => {
           rut: rut,
         },
       });
+
       ctx.response.body = qr + `
              <div class="p-4 md:p-5 space-y-4 text-gray-200">
                 </br>1.- Abra su aplicación de Autenticación </br>2.- Escaneé el codigo QR </br>3.- Presione el botón continuar </br>4.- Ingrese el codigo generado en el siguiente campo </br></br>
                 <div>
                     <label for="token" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Codigo de verificación</label>
                     <input type="text" id="token" name="token" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="6" />
+                    <input type="hidden" id="assist_h" name="assist_h" value="`+ help.case + `"/>
                 </div>
             </div>
             `;
@@ -100,6 +145,7 @@ router.post("/login", async (ctx: Context) => {
                 <div>
                     <label for="token" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Codigo de verificación</label>
                     <input type="text" inputmode="numeric" id="token" name="token" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="6" />
+                    <input type="hidden" id="assist_h" name="assist_h" value="`+ help.case + `"/>
                 </div>
             </div>  
             `;
@@ -129,16 +175,20 @@ router.post("/valida", async (ctx: Context) => {
       window: 2,
     });
 
+    await RegistroAsistencia.findOne({
+      where: {
+        usuarioId: secretUser?.get("id"),
+        hora_salida: null
+      }
+    })
     if (valido) {
       //[x]TODO crear entrada en base de datos para registrar horas de salida y entrada
       //[x]TODO set headers para pasar rut o en sessionstorage
-      await RegistroAsistencia.create({
-        usuarioId: secretUser?.get("id"),
-      });
+      //await RegistroAsistencia.create({
+      //usuarioId: secretUser?.get("id"),
+      //});
       ctx.response.headers.set("HX-Redirect", "./asistencia.html");
     } else {
-      //ctx.response.headers.set("HX-Redirect", "https://www.google.cl");
-      //ctx.response.body = "Token no valido";
       ctx.response.status = 400
     }
   } catch (e) {
@@ -157,11 +207,11 @@ router.post("/ingreso", async (ctx: Context) => {
       }
     })
 
-    //console.log(Date.now())
-    //console.log(rut)
-    //console.log(id_user)
-
-
+    await RegistroAsistencia.create({
+      usuarioId: id_user?.get("id"),
+      hora_entrada: Date.now()
+    })
+    /*
     await RegistroAsistencia.update({
       hora_entrada: Date.now()
     },
@@ -175,8 +225,10 @@ router.post("/ingreso", async (ctx: Context) => {
           ]
         }
       })
-
+//
+      */
     ctx.response.status = 200
+    ctx.response.body = "Registrado con exito"
   } catch (error) {
     console.log(error)
     ctx.response.status = 500
@@ -207,6 +259,8 @@ router.post("/salida", async (ctx: Context) => {
       }
     })
     ctx.response.status = 200
+    ctx.response.body = "Registrado con exito"
+
   } catch (error) {
     console.log(error)
     ctx.response.status = 500

@@ -25,6 +25,7 @@ function validarRut(rutCompleto) {
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    //sitio registro.html
     const btnRegistro = document.getElementById("btn-registro")
     if (btnRegistro) {
         btnRegistro.addEventListener(
@@ -64,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
+    //sitio login.html
     const btnLogin = document.getElementById('btn-login')
     if (btnLogin) {
 
@@ -74,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
             'htmx:beforeRequest',
             (e) => {
                 const rut_login = document.getElementById("rut_login").value;
+                const helper = document.getElementById("assist_h").value;
 
                 document.getElementById("rut_loginError").textContent = "";
 
@@ -90,17 +93,69 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     modal.show();
                     localStorage.setItem("valRut", rut_login)
+
+                    //[x]TODO revisar si guardar al momento de validar o el login
+                    localStorage.setItem("help", helper)
                 }
 
             },
         );
     }
 
-    const helper = localStorage.getItem("valRut")
+    //sitio asistencia.html
 
-    document.getElementById("rut_h").value = helper
+    const ingreso = document.getElementById("btn-i")
+    const salida = document.getElementById("btn-s")
+    if (ingreso && salida) {
+        const estado = localStorage.getItem("help")
+        if (estado === "I") {
+            ingreso.disabled = true
+            ingreso.classList.remove("hover:bg-emerald-800")
+        } else if (estado === "S") {
+            salida.disabled = true
+            salida.classList.remove("hover:bg-red-800")
+        };
+
+        const toast = document.getElementById("toast-success")
+        ingreso.addEventListener("click", () => {
+
+            toast.classList.remove("hidden")
+            setTimeout(() => {
+                ingreso.disabled = true
+                ingreso.classList.remove("hover:bg-emerald-800")
+                salida.disabled = false
+                salida.classList.add("hover:bg-red-800")
+                toast.classList.add("hidden")
+            }, 3000)
+        })
+        salida.addEventListener("click", () => {
+
+            toast.classList.remove("hidden")
+            setTimeout(() => {
+                ingreso.disabled = false
+                ingreso.classList.add("hover:bg-emerald-800")
+                salida.disabled = true
+                salida.classList.remove("hover:bg-red-800")
+                toast.classList.add("hidden")
+            }, 3000)
+        })
+
+
+    }
+
+    const helper_r = localStorage.getItem("valRut")
+
+    document.getElementById("rut_h").value = helper_r
 
 
     //TODO limpiar localstorage cuando presiona el boton salir
+    const btnSalir = document.getElementById("cerrar_session")
+    if (btnSalir) {
+        btnSalir.addEventListener("click", () => {
+            //localStorage.removeItem("valRut")
+            localStorage.clear()
+            window.location.href = "login.html"
+        })
+    }
 
 });
