@@ -96,7 +96,7 @@ router.post("/login", async (ctx: Context) => {
                 </br>1.- Abra su aplicación de Autenticación </br>2.- Escaneé el codigo QR </br>3.- Presione el botón continuar </br>4.- Ingrese el codigo generado en el siguiente campo </br></br>
                 <div>
                     <label for="token" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Codigo de verificación</label>
-                    <input type="text" id="token" name="token" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="6" />
+                    <input type="text" id="token" name="token" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="6" />
                     <input type="hidden" id="assist_h" name="assist_h" value="`+ help.case + `"/>
                 </div>
             </div>
@@ -106,7 +106,7 @@ router.post("/login", async (ctx: Context) => {
             <div class="p-4 md:p-5 space-y-4 text-gray-200">
                 <div>
                     <label for="token" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Codigo de verificación</label>
-                    <input type="text" inputmode="numeric" id="token" name="token" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="6" />
+                    <input type="text" id="token" name="token" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="6" />
                     <input type="hidden" id="assist_h" name="assist_h" value="`+ help.case + `"/>
                 </div>
             </div>  

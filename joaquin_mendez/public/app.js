@@ -66,56 +66,62 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //sitio login.html
+
     const btnLogin = document.getElementById('btn-login')
     if (btnLogin) {
 
         const elem = document.getElementById('medium-modal')
         const modal = new Modal(elem)
 
+
         btnLogin.addEventListener(
             'htmx:beforeRequest',
             (e) => {
 
-                document.body.addEventListener("htmx:afterSwap", () => {
-                    const rut_login = document.getElementById("rut_login").value;
-                    const helper = document.getElementById("assist_h").value;
+                const rut_login = document.getElementById("rut_login").value;
+                document.getElementById("rut_loginError").textContent = "";
 
-                    document.getElementById("rut_loginError").textContent = "";
+                let formValido = true;
 
-                    let formValido = true;
+                if (!regexRut.test(rut_login) || !validarRut(rut_login)) {
+                    document.getElementById("rut_loginError").textContent =
+                        "El RUT es invalido.";
+                    formValido = false;
+                }
 
-                    if (!regexRut.test(rut_login) || !validarRut(rut_login)) {
-                        document.getElementById("rut_loginError").textContent =
-                            "El RUT es invalido.";
-                        formValido = false;
-                    }
+                if (!formValido) {
+                    e.preventDefault();
+                } else {
+                    document.body.addEventListener("htmx:afterSwap", () => {
 
-                    if (!formValido) {
-                        e.preventDefault();
-                    } else {
+                        const helper = document.getElementById("assist_h").value;
+
+
                         modal.show();
                         localStorage.setItem("valRut", rut_login)
 
                         localStorage.setItem("help", helper)
-                    }
-
-                })
+                    });
+                }
             },
         );
-    }
+
+    };
+
+
 
     //sitio asistencia.html
     const ingreso = document.getElementById("btn-i")
     const salida = document.getElementById("btn-s")
     if (ingreso && salida) {
         const estado = localStorage.getItem("help")
-        if (estado === "I") {
+        if (estado === "i") {
             ingreso.disabled = true
             ingreso.classList.remove("hover:bg-emerald-800")
 
             ingreso.classList.remove("bg-emerald-700")
             ingreso.classList.add("bg-emerald-950")
-        } else if (estado === "S") {
+        } else if (estado === "s") {
             salida.disabled = true
             salida.classList.remove("hover:bg-red-800")
 
@@ -132,39 +138,45 @@ document.addEventListener("DOMContentLoaded", () => {
         const toast = document.getElementById("toast-success")
         ingreso.addEventListener("click", () => {
 
+            localStorage.setItem("help", "i")
             toast.classList.remove("hidden")
+
+            //toggle botones
+            ingreso.disabled = true
+            ingreso.classList.remove("hover:bg-emerald-800")
+
+            ingreso.classList.remove("bg-emerald-700")
+            ingreso.classList.add("bg-emerald-950")
+
+            salida.disabled = false
+            salida.classList.add("hover:bg-red-800")
+
+            salida.classList.remove("bg-red-950")
+            salida.classList.add("bg-red-700")
+
             setTimeout(() => {
-                ingreso.disabled = true
-                ingreso.classList.remove("hover:bg-emerald-800")
-
-                ingreso.classList.remove("bg-emerald-700")
-                ingreso.classList.add("bg-emerald-950")
-
-                salida.disabled = false
-                salida.classList.add("hover:bg-red-800")
-
-                salida.classList.remove("bg-red-950")
-                salida.classList.add("bg-red-700")
-
                 toast.classList.add("hidden")
             }, 2000)
         })
         salida.addEventListener("click", () => {
 
+            localStorage.setItem("help", "s")
             toast.classList.remove("hidden")
+
+            //toggle botones
+            salida.disabled = true
+            salida.classList.remove("hover:bg-red-800")
+
+            salida.classList.remove("bg-red-700")
+            salida.classList.add("bg-red-950")
+
+            ingreso.disabled = false
+            ingreso.classList.add("hover:bg-emerald-800")
+
+            ingreso.classList.remove("bg-emerald-950")
+            ingreso.classList.add("bg-emerald-700")
+
             setTimeout(() => {
-                salida.disabled = true
-                salida.classList.remove("hover:bg-red-800")
-
-                salida.classList.remove("bg-red-700")
-                salida.classList.add("bg-red-950")
-
-                ingreso.disabled = false
-                ingreso.classList.add("hover:bg-emerald-800")
-
-                ingreso.classList.remove("bg-emerald-950")
-                ingreso.classList.add("bg-emerald-700")
-
                 toast.classList.add("hidden")
             }, 2000)
         })
