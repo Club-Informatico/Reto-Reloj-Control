@@ -15,45 +15,7 @@ router.get("/hora", (ctx: Context) => {
   ctx.response.body = hora;
 });
 
-//TODO metodo por eliminar
-router.post("/test", async (ctx: Context) => {
-
-  try {
-
-    type Help = {
-      id: number,
-      case: string
-    };
-
-    const rut = (await ctx.request.body.form()).get("rut_h");
-
-    const u = await Usuario.findOne({
-      where: {
-        rut: rut
-      }
-    })
-
-    const res = await sequelize.query(`
-      SELECT id,
-	      CASE
-		      WHEN "hora_salida" IS NULL THEN 'I'
-		      WHEN "hora_salida" IS NOT NULL THEN 'S'
-	      END
-      FROM registros_asistencia
-      WHERE "usuarioId" = `+ u?.get("id") + `
-      AND "createdAt" = (select MAX("createdAt") from registros_asistencia WHERE "usuarioId" = `+ u?.get("id") + `);`, {
-      type: QueryTypes.SELECT
-    })
-
-    //const help: Help | undefined = (res as Help[])[0]
-    const help: Help = res[0] as Help
-
-    console.log(help.case)
-    ctx.response.body = rut
-  } catch (error) {
-    console.log("error=" + error)
-  }
-});
+//[x]TODO metodo por eliminar
 
 
 router.post("/registro", async (ctx: Context) => {
@@ -79,7 +41,6 @@ router.post("/login", async (ctx: Context) => {
   try {
 
     type Help = {
-      id: number,
       case: string
     };
 
@@ -104,16 +65,20 @@ router.post("/login", async (ctx: Context) => {
     }
 
     //[x]TODO raw query
-    //TODO setea respuesta de bd y guarda en localstorage
+    //[x]TODO setea respuesta de bd y guarda en localstorage
     const res = await sequelize.query(`
-      SELECT id,
-	      CASE
-		      WHEN "hora_salida" IS NULL THEN 'I'
-		      WHEN "hora_salida" IS NOT NULL THEN 'S'
-	      END
-      FROM registros_asistencia
-      WHERE "usuarioId" = `+ user?.get("id") + `
-      AND "createdAt" = (select MAX("createdAt") from registros_asistencia WHERE "usuarioId" = `+ user?.get("id") + `);`, {
+      SELECT
+	      COALESCE(
+		      (SELECT 
+			      CASE
+				      WHEN "hora_salida" IS NULL THEN 'i'
+				      WHEN "hora_salida" IS NOT NULL THEN 's'
+			      END
+		      FROM registros_asistencia
+		      WHERE "usuarioId" = 1
+		      AND "createdAt" = (select MAX("createdAt") from registros_asistencia WHERE "usuarioId" = 1)
+	      ),
+	    'n') as case`, {
       type: QueryTypes.SELECT
     })
 
