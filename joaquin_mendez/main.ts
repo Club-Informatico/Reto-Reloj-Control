@@ -1,4 +1,4 @@
-import { Application, send } from "@oak/oak";
+import { Application, Context, send } from "@oak/oak";
 
 import router from "./routes/routes.ts";
 
@@ -8,7 +8,7 @@ app.use(router.allowedMethods());
 
 const port: number = Number(Deno.env.get("PORT")) || 3000;
 
-app.use(async (ctx) => {
+app.use(async (ctx: Context) => {
   await send(ctx, ctx.request.url.pathname, {
     root: "./public",
     index: "index.html",

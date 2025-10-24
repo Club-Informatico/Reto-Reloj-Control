@@ -5,13 +5,14 @@ import * as speakeasy from "speakeasy";
 import { encodeQR } from "@paulmillr/qr";
 import sequelize from "../database/db.ts";
 import { QueryTypes } from "sequelize";
+import { Body } from "@oak/oak/body";
 
 
 const router = new Router();
 router.prefix("/api/v1");
 
 router.get("/hora", (ctx: Context) => {
-  const hora = new Date().toLocaleTimeString();
+  const hora: string = new Date().toLocaleTimeString();
   ctx.response.body = hora;
 });
 
@@ -19,7 +20,7 @@ router.get("/hora", (ctx: Context) => {
 
 router.post("/registro", async (ctx: Context) => {
   try {
-    const payload = ctx.request.body;
+    const payload: Body = ctx.request.body;
 
     if (payload.type() === "form") {
       await Usuario.create({
@@ -52,7 +53,7 @@ router.post("/login", async (ctx: Context) => {
 
     const qr = encodeQR(secret.otpauth_url, "svg");
 
-    const rut = (await body.form()).get("rut_login");
+    const rut: string = (await body.form()).get("rut_login") as string;
     const user = await Usuario.findOne({
       where: {
         rut: rut,
@@ -119,9 +120,9 @@ router.post("/login", async (ctx: Context) => {
 
 router.post("/valida", async (ctx: Context) => {
   try {
-    const body = ctx.request.body;
+    const body: Body = ctx.request.body;
 
-    const rut = (await body.form()).get("rut_login");
+    const rut: string = (await body.form()).get("rut_login") as string;
     const secretUser = await Usuario.findOne({
       attributes: ["id", "totp_secret"],
       where: {
@@ -137,12 +138,6 @@ router.post("/valida", async (ctx: Context) => {
       window: 2,
     });
 
-    await RegistroAsistencia.findOne({
-      where: {
-        usuarioId: secretUser?.get("id"),
-        hora_salida: null
-      }
-    })
     if (valido) {
       ctx.response.headers.set("HX-Redirect", "./asistencia.html");
     } else {
@@ -157,7 +152,7 @@ router.post("/ingreso", async (ctx: Context) => {
 
   try {
 
-    const rut = (await ctx.request.body.form()).get("rut_h");
+    const rut: string = (await ctx.request.body.form()).get("rut_h") as string;
     const id_user = await Usuario.findOne({
       where: {
         rut: rut
@@ -182,7 +177,7 @@ router.post("/salida", async (ctx: Context) => {
 
   try {
 
-    const rut = (await ctx.request.body.form()).get("rut_h");
+    const rut: string = (await ctx.request.body.form()).get("rut_h") as string;
     const id_user = await Usuario.findOne({
       where: {
         rut: rut
