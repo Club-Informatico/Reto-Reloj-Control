@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize({
   dialect: "postgres",
-  host: "localhost",
+  host: Deno.env.get("DB_HOST"),
   password: Deno.env.get("DB_PASS"),
   database: Deno.env.get("DB_NAME"),
   username: Deno.env.get("DB_USER"),
@@ -13,7 +13,7 @@ const sequelize = new Sequelize({
   try {
     await sequelize.authenticate();
     console.log("conectado");
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ force: true });
   } catch (err) {
     console.log(err);
   }

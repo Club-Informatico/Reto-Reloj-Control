@@ -66,11 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //sitio login.html
-
-    //TODO agregar afterswap para que rescate despues que renderize el form
     const btnLogin = document.getElementById('btn-login')
     if (btnLogin) {
-
 
         const elem = document.getElementById('medium-modal')
         const modal = new Modal(elem)
@@ -82,9 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.body.addEventListener("htmx:afterSwap", () => {
                     const rut_login = document.getElementById("rut_login").value;
                     const helper = document.getElementById("assist_h").value;
-                    //if (helper) {
-                    //helper.value = 
-                    //}
 
                     document.getElementById("rut_loginError").textContent = "";
 
@@ -102,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         modal.show();
                         localStorage.setItem("valRut", rut_login)
 
-                        //[x]TODO revisar si guardar al momento de validar o el login
                         localStorage.setItem("help", helper)
                     }
 
@@ -112,7 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //sitio asistencia.html
-
     const ingreso = document.getElementById("btn-i")
     const salida = document.getElementById("btn-s")
     if (ingreso && salida) {
@@ -177,7 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 2000)
         })
 
-
     }
 
     const helper_r = localStorage.getItem("valRut")
@@ -186,10 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (rut_h) {
         rut_h.value = helper_r
     }
-    //document.getElementById("rut_h").value = helper_r
 
-
-    //[x]TODO limpiar localstorage cuando presiona el boton salir
     const btnSalir = document.getElementById("cerrar_session")
     if (btnSalir) {
         btnSalir.addEventListener("click", () => {

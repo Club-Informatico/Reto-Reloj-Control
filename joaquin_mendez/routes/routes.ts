@@ -15,7 +15,6 @@ router.get("/hora", (ctx: Context) => {
   ctx.response.body = hora;
 });
 
-//[x]TODO metodo por eliminar
 
 
 router.post("/registro", async (ctx: Context) => {
@@ -64,8 +63,6 @@ router.post("/login", async (ctx: Context) => {
       return;
     }
 
-    //[x]TODO raw query
-    //[x]TODO setea respuesta de bd y guarda en localstorage
     const res = await sequelize.query(`
       SELECT
 	      COALESCE(
@@ -147,11 +144,6 @@ router.post("/valida", async (ctx: Context) => {
       }
     })
     if (valido) {
-      //[x]TODO crear entrada en base de datos para registrar horas de salida y entrada
-      //[x]TODO set headers para pasar rut o en sessionstorage
-      //await RegistroAsistencia.create({
-      //usuarioId: secretUser?.get("id"),
-      //});
       ctx.response.headers.set("HX-Redirect", "./asistencia.html");
     } else {
       ctx.response.status = 400
@@ -176,22 +168,7 @@ router.post("/ingreso", async (ctx: Context) => {
       usuarioId: id_user?.get("id"),
       hora_entrada: Date.now()
     })
-    /*
-    await RegistroAsistencia.update({
-      hora_entrada: Date.now()
-    },
-      {
-        where: {
-          usuarioId: id_user?.get("id"),
-          createdAt: [
-            sequelize.literal(`(
-                select MAX("createdAt") from registros_asistencia where "usuarioId" = `+ id_user?.get("id") + `
-              )`)
-          ]
-        }
-      })
-//
-      */
+
     ctx.response.status = 200
     ctx.response.body = "Registrado con exito"
   } catch (error) {

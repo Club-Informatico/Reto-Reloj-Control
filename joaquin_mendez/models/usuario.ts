@@ -42,4 +42,3 @@ export const RegistroAsistencia = sequelize.define("registros_asistencia", {
 
 Usuario.hasOne(RegistroAsistencia);
 
-//export default Usuario
