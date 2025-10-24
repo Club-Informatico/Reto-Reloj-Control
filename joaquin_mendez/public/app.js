@@ -66,8 +66,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //sitio login.html
+
+    //TODO agregar afterswap para que rescate despues que renderize el form
     const btnLogin = document.getElementById('btn-login')
     if (btnLogin) {
+
 
         const elem = document.getElementById('medium-modal')
         const modal = new Modal(elem)
@@ -75,29 +78,35 @@ document.addEventListener("DOMContentLoaded", () => {
         btnLogin.addEventListener(
             'htmx:beforeRequest',
             (e) => {
-                const rut_login = document.getElementById("rut_login").value;
-                const helper = document.getElementById("assist_h").value;
 
-                document.getElementById("rut_loginError").textContent = "";
+                document.body.addEventListener("htmx:afterSwap", () => {
+                    const rut_login = document.getElementById("rut_login").value;
+                    const helper = document.getElementById("assist_h").value;
+                    //if (helper) {
+                    //helper.value = 
+                    //}
 
-                let formValido = true;
+                    document.getElementById("rut_loginError").textContent = "";
 
-                if (!regexRut.test(rut_login) || !validarRut(rut_login)) {
-                    document.getElementById("rut_loginError").textContent =
-                        "El RUT es invalido.";
-                    formValido = false;
-                }
+                    let formValido = true;
 
-                if (!formValido) {
-                    e.preventDefault();
-                } else {
-                    modal.show();
-                    localStorage.setItem("valRut", rut_login)
+                    if (!regexRut.test(rut_login) || !validarRut(rut_login)) {
+                        document.getElementById("rut_loginError").textContent =
+                            "El RUT es invalido.";
+                        formValido = false;
+                    }
 
-                    //[x]TODO revisar si guardar al momento de validar o el login
-                    localStorage.setItem("help", helper)
-                }
+                    if (!formValido) {
+                        e.preventDefault();
+                    } else {
+                        modal.show();
+                        localStorage.setItem("valRut", rut_login)
 
+                        //[x]TODO revisar si guardar al momento de validar o el login
+                        localStorage.setItem("help", helper)
+                    }
+
+                })
             },
         );
     }
@@ -111,7 +120,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (estado === "I") {
             ingreso.disabled = true
             ingreso.classList.remove("hover:bg-emerald-800")
+
+            ingreso.classList.remove("bg-emerald-700")
+            ingreso.classList.add("bg-emerald-950")
         } else if (estado === "S") {
+            salida.disabled = true
+            salida.classList.remove("hover:bg-red-800")
+
+            salida.classList.remove("bg-red-700")
+            salida.classList.add("bg-red-950")
+        } else {
             salida.disabled = true
             salida.classList.remove("hover:bg-red-800")
         };
@@ -144,11 +162,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const helper_r = localStorage.getItem("valRut")
+    const rut_h = document.getElementById("rut_h")
 
-    document.getElementById("rut_h").value = helper_r
+    if (rut_h) {
+        rut_h.value = helper_r
+    }
+    //document.getElementById("rut_h").value = helper_r
 
 
-    //TODO limpiar localstorage cuando presiona el boton salir
+    //[x]TODO limpiar localstorage cuando presiona el boton salir
     const btnSalir = document.getElementById("cerrar_session")
     if (btnSalir) {
         btnSalir.addEventListener("click", () => {
