@@ -132,6 +132,9 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             salida.disabled = true
             salida.classList.remove("hover:bg-red-800")
+
+            salida.classList.remove("bg-red-700")
+            salida.classList.add("bg-red-950")
         };
 
         const toast = document.getElementById("toast-success")
@@ -141,21 +144,37 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 ingreso.disabled = true
                 ingreso.classList.remove("hover:bg-emerald-800")
+
+                ingreso.classList.remove("bg-emerald-700")
+                ingreso.classList.add("bg-emerald-950")
+
                 salida.disabled = false
                 salida.classList.add("hover:bg-red-800")
+
+                salida.classList.remove("bg-red-950")
+                salida.classList.add("bg-red-700")
+
                 toast.classList.add("hidden")
-            }, 3000)
+            }, 2000)
         })
         salida.addEventListener("click", () => {
 
             toast.classList.remove("hidden")
             setTimeout(() => {
-                ingreso.disabled = false
-                ingreso.classList.add("hover:bg-emerald-800")
                 salida.disabled = true
                 salida.classList.remove("hover:bg-red-800")
+
+                salida.classList.remove("bg-red-700")
+                salida.classList.add("bg-red-950")
+
+                ingreso.disabled = false
+                ingreso.classList.add("hover:bg-emerald-800")
+
+                ingreso.classList.remove("bg-emerald-950")
+                ingreso.classList.add("bg-emerald-700")
+
                 toast.classList.add("hidden")
-            }, 3000)
+            }, 2000)
         })
 
 
