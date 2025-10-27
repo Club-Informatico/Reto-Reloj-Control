@@ -13,7 +13,7 @@ const sequelize = new Sequelize({
   try {
     await sequelize.authenticate();
     console.log("conectado");
-    await sequelize.sync({ force: true });
+    await sequelize.sync();
   } catch (err) {
     console.log(err);
   }

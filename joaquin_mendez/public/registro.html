@@ -1,74 +1,84 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registro</title>
-    <link rel="icon" href="favicon.ico" type="image/icon">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"
-      integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ"
-      crossorigin="anonymous"
-    ></script>
-  </head>
 
-  <body class="bg-slate-900 flex flex-col items-center justify-center h-screen">
-    <div class="rounded-2xl">
-      <h1 class="text-3xl font-bold text-white mb-7 text-center">
-        Registro de Usuarios
-      </h1>
-      <form class="space-y-3">
-        <div>
-          <label class="text-slate-300">Nombre</label>
-          <input
-            id="nombre_completo"
-            name="nombre_completo"
-            type="text"
-            placeholder="Tu Nombre"
-            class="w-full block min-w-0 grow bg-gray-800 py-1.5 pr-4 pl-7 text-base text-white focus:outline-none border border-neutral-800 rounded-lg"
-            required
-          >
-          <small id="nombreError" style="color: red"></small><br>
-        </div>
-        <div>
-          <label class="text-slate-300">Rut</label>
-          <input
-            id="rut"
-            name="rut"
-            type="text"
-            placeholder="12.345.678-9"
-            class="w-full block bg-gray-800 min-w-0 text-white py-1.5 pr-4 pl-7 border border-neutral-800 rounded-lg"
-            required
-          >
-          <small id="rutError" style="color: red"></small><br>
-        </div>
-        <div>
-          <label class="text-slate-300">Email</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="correo@prueba.com"
-            class="w-full block bg-gray-800 min-w-0 text-white py-1.5 pr-4 pl-7 border border-neutral-800 rounded-lg mb-6"
-            required
-          >
-          <small id="correoError" style="color: red"></small><br>
-        </div>
-        <div>
-          <button
-            id="btn-registro"
-            class="text-white rounded-lg bg-emerald-600 px-4 py-2 w-full font-semibold hover:bg-emerald-700"
-            hx-post="/api/v1/registro"
-          >
-            Enviar
-          </button>
-        </div>
-      </form>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro</title>
+  <link rel="icon" href="favicon.ico" type="image/icon">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"
+    integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ"
+    crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-slate-900 flex flex-col items-center justify-center h-screen">
+  <div class="rounded-2xl">
+    <h1 class="text-3xl font-bold text-white mb-7 text-center">
+      Registro de Usuarios
+    </h1>
+    <form class="space-y-3">
+      <div>
+        <label class="text-slate-300">Nombre</label>
+        <input id="nombre_completo" name="nombre_completo" type="text" placeholder="Tu Nombre"
+          class="w-full block min-w-0 grow bg-gray-800 py-1.5 pr-4 pl-7 text-base text-white focus:outline-none border border-neutral-800 rounded-lg"
+          required>
+        <small id="nombreError" style="color: red"></small><br>
+      </div>
+      <div>
+        <label class="text-slate-300">Rut</label>
+        <input id="rut" name="rut" type="text" placeholder="12.345.678-9"
+          class="w-full block bg-gray-800 min-w-0 text-white py-1.5 pr-4 pl-7 border border-neutral-800 rounded-lg"
+          required>
+        <small id="rutError" style="color: red"></small><br>
+      </div>
+      <div>
+        <label class="text-slate-300">Email</label>
+        <input id="email" name="email" type="email" placeholder="correo@prueba.com"
+          class="w-full block bg-gray-800 min-w-0 text-white py-1.5 pr-4 pl-7 border border-neutral-800 rounded-lg mb-6"
+          required>
+        <small id="correoError" style="color: red"></small><br>
+      </div>
+      <div>
+        <button id="btn-registro"
+          class="text-white rounded-lg bg-emerald-600 px-4 py-2 w-full font-semibold hover:bg-emerald-700"
+          hx-post="/api/v1/registro"
+          hx-target="#toastr"
+          hx-swap="innerHTML">
+          Enviar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div id="toast-register"
+    class="hidden fixed bottom-5 right-5 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-sm dark:text-gray-400 dark:bg-gray-800"
+    role="alert">
+    <div
+      class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+        viewBox="0 0 20 20">
+        <path
+          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+      </svg>
+      <span class="sr-only">Check icon</span>
     </div>
-  </body>
-  <footer class="text-white text-center mt-10 py-3">
-    <p id="foot">Sistema de Registro</p>
-  </footer>
-  <script src="app.js"></script>
+    <div id="toastr" class="ms-3 text-sm font-normal"></div>
+    <button type="button"
+      class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+      data-dismiss-target="#toast-register" aria-label="Close">
+      <span class="sr-only">Close</span>
+      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+      </svg>
+    </button>
+  </div>
+
+</body>
+<footer class="text-white text-center mt-10 py-3">
+  <p id="foot">Sistema de Registro</p>
+</footer>
+<script src="app.js"></script>
+
 </html>

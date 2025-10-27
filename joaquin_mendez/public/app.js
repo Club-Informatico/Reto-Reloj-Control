@@ -60,6 +60,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (!formValido) {
                     e.preventDefault();
+                } else {
+                    const toastr = document.getElementById("toast-register")
+
+                    toastr.classList.remove("hidden")
+                    setTimeout(() => {
+                        toastr.classList.add("hidden")
+                    }, 2000)
                 }
             },
         );

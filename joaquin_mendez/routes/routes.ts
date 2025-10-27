@@ -73,8 +73,8 @@ router.post("/login", async (ctx: Context) => {
 				      WHEN "hora_salida" IS NOT NULL THEN 's'
 			      END
 		      FROM registros_asistencia
-		      WHERE "usuarioId" = 1
-		      AND "createdAt" = (select MAX("createdAt") from registros_asistencia WHERE "usuarioId" = 1)
+		      WHERE "usuarioId" = `+ user?.get("id") + `
+		      AND "createdAt" = (select MAX("createdAt") from registros_asistencia WHERE "usuarioId" = `+ user?.get("id") + `)
 	      ),
 	    'n') as case`, {
       type: QueryTypes.SELECT
