@@ -158,8 +158,8 @@ Para guiarte, aquí tienes una propuesta de cómo podrían ser tus tablas:
 <table align="center">
   <tr>
     <td align="center">
-      <a href="#">
-        <img src="#" width="140" />
+      <a href="https://github.com/KrlitosForever">
+        <img src="https://avatars.githubusercontent.com/u/7423579?v=4" width="140" />
       </a>
     </td>
      <td align="center">
@@ -174,7 +174,7 @@ Para guiarte, aquí tienes una propuesta de cómo podrían ser tus tablas:
     </td>
   </tr>
   <tr>
-    <td align="center">? ? ? <img src="https://rawcdn.githack.com/twitter/twemoji/v14.0.2/assets/svg/1f1e8-1f1f1.svg" width="16" /></td>
+    <td align="center">Carlos Carrasco <img src="https://rawcdn.githack.com/twitter/twemoji/v14.0.2/assets/svg/1f1e8-1f1f1.svg" width="16" /></td>
     <td align="center">? ? ? <img src="https://rawcdn.githack.com/twitter/twemoji/v14.0.2/assets/svg/1f1e8-1f1f1.svg" width="16" /></td>
     <td align="center">? ? ? <img src="https://rawcdn.githack.com/twitter/twemoji/v14.0.2/assets/svg/1f1e8-1f1f1.svg" width="16" /></td>
   </tr>
