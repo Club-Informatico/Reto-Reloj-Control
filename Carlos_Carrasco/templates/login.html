@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Iniciar Sesión</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('login') }}">
+                    <div class="mb-3">
+                        <label for="rut" class="form-label">RUT</label>
+                        <input type="text" class="form-control" id="rut" name="rut" required 
+                               pattern="\d{7,8}-[0-9kK]" title="Formato: 12345678-9">
+                    </div>
+                    <!-- CAMPO MODIFICADO -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                        <div class="form-text">Ingrese la contraseña que creó al registrarse.</div>
+                    </div>
+                    <!-- FIN CAMPO MODIFICADO -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">Iniciar Sesión</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <p>¿No tienes una cuenta? <a href="{{ url_for('register') }}">Regístrate</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

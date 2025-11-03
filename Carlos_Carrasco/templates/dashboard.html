@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Panel de Control{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Bienvenido, {{ user_name }}</h2>
+            <span class="badge bg-secondary">RUT: {{ user_rut }}</span>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Registrar Ingreso</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if can_check_in %}
+                            <form method="POST" action="{{ url_for('register_attendance_route') }}">
+                                <input type="hidden" name="attendance_type" value="ingreso">
+                                <div class="mb-3">
+                                    <label for="check_in_code" class="form-label">Código de Autenticación</label>
+                                    <input type="text" class="form-control" id="check_in_code" name="otp_code" required 
+                                           maxlength="6" pattern="[0-9]{6}" title="6 dígitos numéricos">
+                                    <div class="form-text">Ingrese el código de 6 dígitos de Google Authenticator.</div>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">Registrar Ingreso</button>
+                                </div>
+                            </form>
+                        {% else %}
+                            <p class="text-muted">Ya tiene un ingreso registrado. Debe registrar una salida primero.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0">Registrar Salida</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if can_check_out %}
+                            <form method="POST" action="{{ url_for('register_attendance_route') }}">
+                                <input type="hidden" name="attendance_type" value="salida">
+                                <div class="mb-3">
+                                    <label for="check_out_code" class="form-label">Código de Autenticación</label>
+                                    <input type="text" class="form-control" id="check_out_code" name="otp_code" required 
+                                           maxlength="6" pattern="[0-9]{6}" title="6 dígitos numéricos">
+                                    <div class="form-text">Ingrese el código de 6 dígitos de Google Authenticator.</div>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-danger">Registrar Salida</button>
+                                </div>
+                            </form>
+                        {% else %}
+                            <p class="text-muted">Debe registrar un ingreso antes de poder registrar una salida.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Últimos Registros</h5>
+            </div>
+            <div class="card-body">
+                {% if last_attendance %}
+                    <div class="alert alert-{{ 'success' if last_attendance.type == 'ingreso' else 'warning' }}">
+                        <strong>{{ last_attendance.type.capitalize() }}:</strong> {{ last_attendance.timestamp }}
+                    </div>
+                {% else %}
+                    <p class="text-muted">No hay registros de asistencia aún.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
