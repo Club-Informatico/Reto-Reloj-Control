@@ -200,7 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnSalir = document.getElementById("cerrar_session")
     if (btnSalir) {
         btnSalir.addEventListener("click", () => {
-            //localStorage.removeItem("valRut")
             localStorage.clear()
             window.location.href = "login.html"
         })
