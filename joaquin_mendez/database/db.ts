@@ -1,0 +1,22 @@
+import { Sequelize } from "sequelize";
+
+const sequelize = new Sequelize({
+  dialect: "postgres",
+  host: Deno.env.get("DB_HOST"),
+  password: Deno.env.get("DB_PASS"),
+  database: Deno.env.get("DB_NAME"),
+  username: Deno.env.get("DB_USER"),
+  logging: false,
+});
+
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("conectado");
+    await sequelize.sync();
+  } catch (err) {
+    console.log(err);
+  }
+})();
+
+export default sequelize;
