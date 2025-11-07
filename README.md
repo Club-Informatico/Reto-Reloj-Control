@@ -163,8 +163,8 @@ Para guiarte, aquí tienes una propuesta de cómo podrían ser tus tablas:
       </a>
     </td>
      <td align="center">
-      <a href="#">
-        <img src="#" width="140" />
+      <a href="https://github.com/juackomdz">
+        <img src="https://avatars.githubusercontent.com/u/78381141?v=4" width="140" />
       </a>
     </td>
      <td align="center">
@@ -175,7 +175,7 @@ Para guiarte, aquí tienes una propuesta de cómo podrían ser tus tablas:
   </tr>
   <tr>
     <td align="center">Carlos Carrasco <img src="https://rawcdn.githack.com/twitter/twemoji/v14.0.2/assets/svg/1f1e8-1f1f1.svg" width="16" /></td>
-    <td align="center">? ? ? <img src="https://rawcdn.githack.com/twitter/twemoji/v14.0.2/assets/svg/1f1e8-1f1f1.svg" width="16" /></td>
+    <td align="center">Joaquín Méndez <img src="https://rawcdn.githack.com/twitter/twemoji/v14.0.2/assets/svg/1f1e8-1f1f1.svg" width="16" /></td>
     <td align="center">? ? ? <img src="https://rawcdn.githack.com/twitter/twemoji/v14.0.2/assets/svg/1f1e8-1f1f1.svg" width="16" /></td>
   </tr>
   <tr>
